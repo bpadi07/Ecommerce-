@@ -8,6 +8,7 @@ import {
   createProductReview,
   deleteProduct,
   updateProduct,
+  updateProductDiscount
 } from "../controllers/productController.js"
 
 import {
@@ -24,6 +25,7 @@ router
   .delete(protect, admin, deleteProduct)
 
 router.route("/:id/review").post(protect, createProductReview)
+router.put('/:id/discount', updateProductDiscount);
 
 
 // router.get("/",asyncHandler(async(req,res)=>{

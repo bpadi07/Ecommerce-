@@ -3,7 +3,7 @@ import React from "react";
 const Rating = ({ value, text }) => {
   return (
     <div className="rating">
-      <span style={{ color: "grey" }}>
+      <span style={{ color: "yellow" }}>
         <i
           className={
             value >= 1
@@ -14,7 +14,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
       </span>
-      <span style={{ color: "grey" }}>
+      <span style={{ color: "yellow" }}>
         <i
           className={
             value >= 2
@@ -25,7 +25,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
       </span>
-      <span style={{ color: "grey" }}>
+      <span style={{ color: "yellow" }}>
         <i
           className={
             value >= 3
@@ -36,7 +36,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
       </span>
-      <span style={{ color: "grey" }}>
+      <span style={{ color: "yellow" }}>
         <i
           className={
             value >= 4
@@ -47,7 +47,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
       </span>
-      <span style={{ color: "grey" }}>
+      <span style={{ color: "yellow" }}>
         <i
           className={
             value >= 5

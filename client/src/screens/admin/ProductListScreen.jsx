@@ -9,15 +9,16 @@ import Spinner from "../../components/Spinner";
 import { toast } from "react-toastify";
 import Paginate from "../../components/Paginate";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../../constants";
 
 export default function ProductListScreen() {
-  const { keyword: urlKeyword } = useParams();
+  const { keyword: urlKeyword, pageNumber } = useParams();
   const [keyword, setKeyword] = useState(urlKeyword || "");
-  const { pageNumber } = useParams();
   const navigate = useNavigate();
+
   const { data, isLoading, error, refetch } = useGetProductsQuery({
     pageNumber,
-    keyword, // Pass the keyword parameter to the query
+    keyword,
   });
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
@@ -25,10 +26,7 @@ export default function ProductListScreen() {
     useDeleteProductMutation();
   const { userInfo } = useSelector((state) => state.user);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
+  if (isLoading) return <Spinner />;
   if (error) {
     toast.error(error?.data?.message || error?.error);
   }
@@ -104,7 +102,13 @@ export default function ProductListScreen() {
               Name
             </th>
             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Price
+              Original Price
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Discount
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Final Price
             </th>
             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Brand
@@ -119,7 +123,19 @@ export default function ProductListScreen() {
             <tr key={product._id}>
               <td className="px-6 py-4 whitespace-nowrap">{product._id}</td>
               <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">${product.price}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                ${product.price.toFixed(2)}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                ${product.discount}%
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                $
+                {(
+                  product.price -
+                  product.price * (product.discount / 100)
+                ).toFixed(2)}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">{product.brand}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button

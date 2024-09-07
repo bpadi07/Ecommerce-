@@ -8,8 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-// import { useEffect } from "react";
-import axios from "axios";
 
 export default function OrderScreen() {
   const navigate = useNavigate();
@@ -27,12 +25,13 @@ export default function OrderScreen() {
   const [deliverOrder, { isLoading: loadingDeliver }] =
     useDeliverOrderMutation();
 
-  if (error) {
-    return toast.error(error.message);
-  }
-
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (error) {
+    toast.error(error.message || "Failed to load order details.");
+    return <div>Error loading order details.</div>;
   }
 
   const {
@@ -42,6 +41,8 @@ export default function OrderScreen() {
     orderItems,
     shippingPrice,
     taxPrice,
+    trackingNumber,
+    isProcessed,
   } = order;
 
   const calculateTotal = (orderItems) => {
@@ -58,20 +59,11 @@ export default function OrderScreen() {
   };
 
   const deliverOrderHandler = async (orderId) => {
-    await deliverOrder(orderId);
-    refetch(); // Refetch order details if needed
-    sendSuccessEmail(orderId);
-    //sendSuccessEmail(); // Call this function after marking as delivered
-  };
-
-  const sendSuccessEmail = async (orderId) => {
     try {
-      const { data } = await axios.post(
-        `http://localhost:5000/order/${orderId}`
-      );
-      console.log(data.message);
+      await deliverOrder(orderId);
+      refetch();
     } catch (error) {
-      console.error("Error sending success email", error);
+      toast.error("Failed to mark the order as delivered.");
     }
   };
 
@@ -91,15 +83,34 @@ export default function OrderScreen() {
         </div>
         <div className="mb-4">
           <h3 className="text-lg font-semibold mb-2">Order Status:</h3>
-          <p
-            className={
-              isDelivered
-                ? "text-green-500 font-semibold"
-                : "text-red-500 font-semibold"
-            }
-          >
-            {isDelivered ? "Delivered" : "Not Delivered"}
-          </p>
+
+          {isDelivered ? (
+            <p
+              style={{ color: "green", fontSize: 20, fontFamily: "sans-serif" }}
+            >
+              Delivered
+            </p>
+          ) : trackingNumber ? (
+            <p
+              style={{ color: "green", fontSize: 20, fontFamily: "sans-serif" }}
+            >
+              Assigned Tracking Number
+            </p>
+          ) : isProcessed ? (
+            <p
+              style={{
+                color: "green",
+                fontSize: 20,
+                fontFamily: "sans-serif",
+              }}
+            >
+              Processed
+            </p>
+          ) : (
+            <p style={{ color: "Red", fontSize: 20, fontFamily: "sans-serif" }}>
+              Pending
+            </p>
+          )}
         </div>
       </div>
 
@@ -114,7 +125,7 @@ export default function OrderScreen() {
             </tr>
           </thead>
           <tbody>
-            {orderItems?.map((item) => (
+            {orderItems.map((item) => (
               <tr key={item._id} className="border-b border-gray-400">
                 <td className="text-left">{item.name}</td>
                 <td className="text-right">{item.qty}</td>
@@ -138,9 +149,11 @@ export default function OrderScreen() {
         <div className="mt-4">
           <p className="text-right font-semibold">
             Total: $
-            {+calculateTotal(orderItems).toFixed(2) +
-              +shippingPrice +
-              +taxPrice}
+            {(
+              calculateTotal(orderItems) +
+              Number(shippingPrice) +
+              Number(taxPrice)
+            ).toFixed(2)}
           </p>
         </div>
         <button
@@ -149,7 +162,7 @@ export default function OrderScreen() {
         >
           Pay with Stripe
         </button>
-        {userInfo.isAdmin && !order.isDelivered && (
+        {userInfo.isAdmin && !isDelivered && (
           <button
             className="bg-gray-800 text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-950"
             onClick={() => deliverOrderHandler(orderId)}
@@ -157,7 +170,6 @@ export default function OrderScreen() {
             Mark as Delivered
           </button>
         )}
-
         {loadingStripe && <Spinner />}
       </div>
     </div>

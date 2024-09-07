@@ -34,8 +34,21 @@ export default function Product({ product }) {
             />
           </div>
           <p className="mt-4 text-lg font-bold text-gray-800">
-            ${product.price.toFixed(2)}
+            <span className="line-through">${product.price.toFixed(2)}</span>
+            <span className="text-green-500 ml-4">
+              {product.discount}%discount
+            </span>
+            <br />$
+            {(product.price - product.price * (product.discount / 100)).toFixed(
+              2
+            )}
           </p>
+          {/* <p className="mt-4 text-lg font-bold text-gray-800">
+            $
+            {(product.price - product.price * (product.discount / 100)).toFixed(
+              2
+            )}
+          </p> */}
           {product.onSale && (
             <span className="text-sm text-red-500 font-semibold">On Sale!</span>
           )}

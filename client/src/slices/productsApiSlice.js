@@ -13,6 +13,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     getProductDetails: builder.query({
       query: productId => ({
         url: `${PRODUCTS_URL}/${productId}`,
+        params: { productId},
       }),
       keepUnusedDataFor: 5,
     }),
@@ -49,6 +50,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    updateProductDiscount: builder.mutation({
+      query: ({ id, discount }) => ({
+        url: `products/${id}/discount`,
+        method: 'PUT',
+        body: { discount },
+      }),
+    }),
   }),
 })
 
@@ -60,4 +68,5 @@ export const {
   useUploadFileHandlerMutation,
   useDeleteProductMutation,
   useCreateReviewMutation,
+  useUpdateProductDiscountMutation
 } = productsApiSlice

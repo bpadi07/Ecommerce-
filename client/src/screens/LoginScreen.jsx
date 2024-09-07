@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCredentials } from "../slices/userSlice";
-import { BACKEND_URL } from "../constants";
+import { BACKEND_URL, BASE_URL } from "../constants";
 import Spinner from "../components/Spinner";
 
 export default function LoginScreen() {
@@ -27,7 +27,7 @@ export default function LoginScreen() {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate("/");
+      navigate(`/`);
       toast.success("Login Successful");
     } catch (error) {
       toast.error(

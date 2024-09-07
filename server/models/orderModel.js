@@ -18,6 +18,15 @@ const OrderSchema = mongoose.Schema(
           required: true,
           ref: "Product",
         },
+        
+        isReturned: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+        returnedAt: {
+          type: Number,
+        },
       },
     ],
     shippingAddress: {
@@ -64,7 +73,29 @@ const OrderSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    
     deliveredAt: {
+      type: Date,
+    },
+    isProcessed: {
+      type: Boolean,
+      default: false,
+    },
+    processedAt: {
+      type: Date,
+    },
+    trackingNumber: {
+      type: String,
+    },
+    trackingAssignedAt: {
+      type: Date,
+    },
+    isReturned: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    returnedAt: {
       type: Date,
     },
   },

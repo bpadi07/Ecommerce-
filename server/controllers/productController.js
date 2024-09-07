@@ -50,7 +50,7 @@ const createProduct = asyncHandler(async (req, res) => {
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, image, brand, category, countInStock, description } =
+  const { name, price, discount,image, brand, category, returnduedate,countInStock, description } =
     req.body
 
   const product = await Product.findById(req.params.id)
@@ -58,10 +58,12 @@ const updateProduct = asyncHandler(async (req, res) => {
   if (product) {
     product.name = name
     product.price = price
+    product.discount = discount
     product.description = description
     product.image = image
     product.brand = brand
     product.category = category
+    product.returnduedate = returnduedate
     product.countInStock = countInStock
 
     const updatedProduct = await product.save()
@@ -123,6 +125,19 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product Not Found")
   }
 })
+const updateProductDiscount = asyncHandler(async (req, res) => {
+  const { discount } = req.body;
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    product.discount = discount;
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
 
 export {
   getProducts,
@@ -131,4 +146,5 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
+  updateProductDiscount
 }

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { clearCartItems } from "../slices/cartSlice";
-//import sendEmail from "../../../server/utils/sendEmail";
+import { BASE_URL } from "../constants";
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();

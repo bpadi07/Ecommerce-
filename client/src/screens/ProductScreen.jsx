@@ -83,13 +83,35 @@ export default function ProductScreen() {
                 text={`${product.numReviews} reviews`}
               />
             </div>
-            <p className="text-gray-700 mt-2">${product?.price?.toFixed(2)}</p>
+            {/* <p className="text-gray-700 mt-2">${product?.price?.toFixed(2)}</p> */}
             <p className="text-gray-700 mt-2">
               In Stock: {product.countInStock}
             </p>
             {/* Ensure this condition is met */}
             <p className="text-gray-700 mt-2">
               Return Date: {product.returnduedate}
+            </p>
+            <p className="text-xl mb-4">
+              Original Price:{" "}
+              <span className="line-through">${product.price.toFixed(2)}</span>
+              <span className="text-green-500 ml-4 font-bold">
+                {product.discount}%discount
+              </span>
+            </p>
+            {/* <p className="text-xl mb-4">
+              Discount:{" "}
+              <span className="text-green-500">{product.discount}%</span>
+            </p> */}
+            <p className="text-2xl font-bold">
+              Final Price:{" "}
+              <span className="text-red-500">
+                {" "}
+                $
+                {(
+                  product.price -
+                  product.price * (product.discount / 100)
+                ).toFixed(2)}
+              </span>
             </p>
 
             <div className="mt-4">

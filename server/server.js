@@ -11,7 +11,8 @@ import userRoutes from "./routes/userRoutes.js"
 import passportUtil from "./utils/passport.js"
 import authRoutes from "./routes/authRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
-import stripeUtil from "./utils/stripe.js"
+//import stripeUtil from "./utils/stripe.js"
+import stripe from "./utils/stripe.js"
 import uploadRoutes from "./routes/uploadRoutes.js"
 
 import bodyParser from "body-parser"
@@ -43,13 +44,14 @@ app.use((req, res, next) => {
   )
 // app.use(cors())
 app.use(cookieParser())
+
 passportUtil(app);
 
 
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended:true}))
-stripeUtil(app);
+stripe(app);
 
   
   

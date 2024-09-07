@@ -68,6 +68,12 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    returnduedate:{
+      type:Number,
+      required:true,
+      default:0
+    },
+    discount: { type: Number, required:true,default: 0 },
   },
   {
     timestamps: true,

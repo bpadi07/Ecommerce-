@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useGetProductDetailsQuery,
+  //useGetProductsQuery,
   useUpdateProductMutation,
   useUploadFileHandlerMutation,
 } from "../../slices/productsApiSlice";
@@ -15,35 +16,39 @@ export default function ProductEditScreen() {
     isLoading: loadingProduct,
     error,
   } = useGetProductDetailsQuery(productId);
-  const [updateProduct, { isLoading: loadingupdate }, refetch] =
+  const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
   const [uploadProductImage, { isLoading: uploadLoading }] =
     useUploadFileHandlerMutation();
-
-  console.log(product);
-
   const navigate = useNavigate();
+
   const [productData, setProductData] = useState({
-    name: product?.name,
-    price: product?.price,
-    image: product?.image,
-    brand: product?.brand,
-    category: product?.category,
-    countInStock: product?.countInStock,
-    returnduedate: product?.returnduedate,
-    description: product?.description,
+    name: "",
+    price: 0,
+    discount: 0,
+    image: "",
+    brand: "",
+    category: "",
+    countInStock: 0,
+    returnduedate: "",
+    description: "",
   });
 
-  const {
-    name,
-    price,
-    image,
-    brand,
-    category,
-    countInStock,
-    returnduedate,
-    description,
-  } = productData;
+  useEffect(() => {
+    if (product) {
+      setProductData({
+        name: product.name,
+        price: product.price,
+        discount: product.discount,
+        image: product.image,
+        brand: product.brand,
+        category: product.category,
+        countInStock: product.countInStock,
+        returnduedate: product.returnduedate,
+        description: product.description,
+      });
+    }
+  }, [product]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,18 +63,10 @@ export default function ProductEditScreen() {
     try {
       await updateProduct({
         productId,
-        name,
-        price,
-        image,
-        brand,
-        category,
-        countInStock,
-        returnduedate,
-        description,
+        ...productData,
       }).unwrap();
       toast.success("Product Updated");
       navigate("/admin/products");
-      refetch();
     } catch (error) {
       toast.error(error?.data?.message || error?.error);
     }
@@ -81,14 +78,20 @@ export default function ProductEditScreen() {
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
-      setProductData({
-        ...productData,
+      setProductData((prev) => ({
+        ...prev,
         image: res.image,
-      });
+      }));
     } catch (error) {
       toast.error(error?.data?.message || error?.error);
     }
   };
+
+  if (loadingProduct) return <Spinner />;
+  if (error) {
+    toast.error(error?.data?.message || error?.error);
+    return null;
+  }
 
   return (
     <div className="w-1/3 mx-auto">
@@ -102,7 +105,7 @@ export default function ProductEditScreen() {
             type="text"
             id="name"
             name="name"
-            value={name}
+            value={productData.name}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
@@ -115,7 +118,20 @@ export default function ProductEditScreen() {
             type="number"
             id="price"
             name="price"
-            value={price}
+            value={productData.price}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="discount" className="block font-medium">
+            Discount:
+          </label>
+          <input
+            type="number"
+            id="discount"
+            name="discount"
+            value={productData.discount}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
@@ -141,7 +157,7 @@ export default function ProductEditScreen() {
             type="text"
             id="brand"
             name="brand"
-            value={brand}
+            value={productData.brand}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
@@ -154,7 +170,7 @@ export default function ProductEditScreen() {
             type="text"
             id="category"
             name="category"
-            value={category}
+            value={productData.category}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
@@ -167,20 +183,20 @@ export default function ProductEditScreen() {
             type="number"
             id="countInStock"
             name="countInStock"
-            value={countInStock}
+            value={productData.countInStock}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
         </div>
         <div className="mb-4">
           <label htmlFor="returnduedate" className="block font-medium">
-            Return Due Date :
+            Return Due Date:
           </label>
           <input
             type="number"
             id="returnduedate"
             name="returnduedate"
-            value={returnduedate}
+            value={productData.returnduedate}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
@@ -192,19 +208,19 @@ export default function ProductEditScreen() {
           <textarea
             id="description"
             name="description"
-            value={description}
+            value={productData.description}
             onChange={handleInputChange}
             className="w-full border border-gray-300 p-2 rounded-md"
           />
         </div>
         <div className="mb-4">
           <button
+            type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            onClick={handleSubmit}
           >
             Update Product
           </button>
-          {uploadLoading && <Spinner />}
+          {loadingUpdate && <Spinner />}
         </div>
       </form>
     </div>
