@@ -28,36 +28,5 @@ router.route("/:id/review").post(protect, createProductReview)
 router.put('/:id/discount', updateProductDiscount);
 
 
-// router.get("/",asyncHandler(async(req,res)=>{
-  
-//       const products=await Product.find({})
-//       if(products){
-//         res.json(products)
-//       }
-//       else{
-//         res.status(404)
-//         throw new Error("Products not found")
-//       }
-//       // console.log(products);
-//       // res.json(products)
-// })
 
-// )
-// router.get("/:id",asyncHandler(async(req,res)=>{
-
-//   const product=await Product.findById(req.params.id)
-//   if(product){
-//     res.json(product)
-//   }
-//   else{
-//     res.status(404)
-//     throw new Error("product is not found")
-//   }
-//   // res.json(product)
-
-
-
-  
-// })
-// )
 export default router
