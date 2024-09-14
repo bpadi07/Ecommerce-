@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../slices/userSlice";
 import { useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
-import BannerScreen from "./BannerScreen";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
