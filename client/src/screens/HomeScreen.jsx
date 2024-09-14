@@ -1,3 +1,4 @@
+import React from "react";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Spinner from "../components/Spinner";
@@ -9,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../slices/userSlice";
 import { useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import BannerScreen from "./BannerScreen";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -48,6 +50,10 @@ export default function HomeScreen() {
         toast.error(error)
       ) : (
         <>
+          {/* <React.Fragment>
+            <BannerScreen />
+          </React.Fragment> */}
+
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {data?.products?.map((product, i) => (
               <Product key={i} product={product} />
