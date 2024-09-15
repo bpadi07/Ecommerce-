@@ -9,7 +9,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       
-      "/api": "http://localhost:5000",
-      "/upload": "http://localhost:5000"
+      "/api": "https://ecommerce-8-lcx4.onrender.com",
+      "/upload": "https://ecommerce-8-lcx4.onrender.com"
     },
   },})
