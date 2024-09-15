@@ -14,7 +14,6 @@ router.get(
   passport.authenticate("google", {
     successRedirect: process.env.CLIENT_URL,
     failureRedirect: `${process.env.CLIENT_URL}/login/failed`,
-    
   })
 )
 
@@ -44,15 +43,13 @@ router.get("/login/success", async (req, res) => {
       const newUser = new User({
         name: req.user._json.name,
         email: req.user._json.email,
-        password: Date.now(),//dummy password
-        isAdmin:req.user._json.isAdmin 
+        password: Date.now(), //dummy password
       })
       generateToken(res, newUser._id)
       await newUser.save()
     }
     res.status(200).json({
       user: { ...req.user, isAdmin: userExists.isAdmin },
-      // user: { ...req.user},
       message: "Succesfully logged in",
       _id: userExists._id,
     })
