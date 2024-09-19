@@ -5,15 +5,14 @@ import { Strategy as GoogleStategy } from "passport-google-oauth20"
 const passportUtil = app => {
   app.use(
     session({
-      secret: process.env.SESSION_SECRET , // Set your session secret here
+      secret: process.env.SESSION_SECRET,
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
       },
     })
   )
-  
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -21,8 +20,8 @@ const passportUtil = app => {
     new GoogleStategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRETE,
-        callbackURL:"/auth/google/callback",
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/auth/google/callback",
         scope: ["profile", "email"],
       },
       (accessToken, refreshToken, profile, callback) => {
