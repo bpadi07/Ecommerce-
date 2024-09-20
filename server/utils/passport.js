@@ -20,7 +20,7 @@ const passportUtil = app => {
     new GoogleStategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRETE,
         callbackURL: "/auth/google/callback",
         scope: ["profile", "email"],
       },
