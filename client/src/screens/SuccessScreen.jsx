@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../constants";
 const SuccessScreen = () => {
   useEffect(() => {
     const sendSuccessEmail = async () => {
       try {
-        const { data } = await axios.post(
-          "http://localhost:5000/success-screen"
-        );
+        const { data } = await axios.post(`${BACKEND_URL}/success-screen`);
         console.log(data.message);
       } catch (error) {
         console.error("Error sending success email", error);
