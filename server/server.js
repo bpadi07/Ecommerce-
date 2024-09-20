@@ -50,21 +50,21 @@ app.use("/auth", authRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/upload", uploadRoutes)
 
-const __dirname = path.resolve()
-app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+const __dirname = path.resolve(); // Define __dirname once
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve()
-  app.use("/uploads", express.static(path.join(__dirname, "uploads")))
-  app.use(express.static(path.join(__dirname, "/client/dist")))
+  app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+  app.use(express.static(path.join(__dirname, "/client/dist")));
   app.use("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"))
-  )
+  );
 } else {
-  app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+  app.use("/uploads", express.static(path.join(__dirname, "uploads")));
   app.get("/", (req, res) => {
-    res.send("Api is running...")
-  })
+    res.send("API is running...");
+  });
 }
 
 app.use(notFound)

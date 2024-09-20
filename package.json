@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
   "dependencies": {
     "concurrently": "^8.2.2",
     "axios": "^1.7.2",
