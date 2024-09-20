@@ -18,6 +18,16 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const { userInfo } = useSelector((state) => state.user);
 
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
+
   const [login, { isLoading }] = useLoginMutation();
   const [forgotPassword, { isLoading: isLoadingPassword }] =
     useForgotPasswordMutation();
