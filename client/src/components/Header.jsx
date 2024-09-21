@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiLogOut, FiLogIn } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -158,7 +158,8 @@ const Header = () => {
             <FiShoppingCart className="mr-1" />
             Cart
             <span className="bg-blue-700 text-white rounded-full px-2 py-1 ml-2">
-              {cartItems.length}
+              {/* Add a fallback in case cartItems is undefined */}
+              {cartItems?.length || 0}
             </span>
           </Link>
 
@@ -202,7 +203,7 @@ const Header = () => {
               <FiShoppingCart className="mr-1" />
               Cart
               <span className="bg-blue-700 text-white rounded-full px-2 py-1 ml-2">
-                {cartItems.length}
+                {cartItems?.length || 0}
               </span>
             </Link>
             {userInfo && (

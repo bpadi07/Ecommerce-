@@ -1,4 +1,4 @@
-import React from "react";
+
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Spinner from "../components/Spinner";

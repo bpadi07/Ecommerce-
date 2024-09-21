@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -29,6 +28,7 @@ import ProductListScreen from "./screens/admin/ProductListScreen.jsx";
 import OrderListScreen from "./screens/admin/OrderListScreen.jsx";
 import ProductEditScreen from "./screens/admin/ProductEditScreen.jsx";
 import UserEditScreen from "./screens/admin/UserEditScreen.jsx";
+import whatsappLogo from "./assets/images/whatsapp.png"; // Adjust the path as needed
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,16 +36,13 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/search/:keyword" element={<HomeScreen />} />
       <Route path="/page/:pageNumber" element={<HomeScreen />} />
-      <Route
-        path="/search/:keyword/page/:pageNumber"
-        element={<HomeScreen />}
-      />
+      <Route path="/search/:keyword/page/:pageNumber" element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
-      {/*Private Routes*/}
+      {/* Private Routes */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/shipping" element={<ShippingScreen />} />
@@ -54,20 +51,14 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/success-screen" element={<SuccessScreen />} />
       </Route>
-      {/*Admin Routes*/}
+      {/* Admin Routes */}
       <Route path="/" element={<AdminRoute />}>
         <Route path="/admin/users" element={<UserListScreen />} />
         <Route path="/admin/users/:id/edit" element={<UserEditScreen />} />
         <Route path="/admin/products" element={<ProductListScreen />} />
-        <Route
-          path="/admin/products/:pageNumber"
-          element={<ProductListScreen />}
-        />
+        <Route path="/admin/products/:pageNumber" element={<ProductListScreen />} />
         <Route path="/admin/orders" element={<OrderListScreen />} />
-        <Route
-          path="/admin/product/search/:keyword"
-          element={ProductListScreen}
-        ></Route>
+        <Route path="/admin/product/search/:keyword" element={<ProductListScreen />} />
         <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
       </Route>
     </Route>
@@ -77,5 +68,17 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router} />
+    <div className="fixed right-3 bottom-10 p-3 z-50">
+  <a 
+   href="https://wa.me/918767389424?text=Hello%20!%0A%0AThank%20you%20for%20reaching%20out%20to%20us%20at%20SparkTech!%0A%0AWe%20are%20here%20to%20assist%20you%20with%20any%20queries%20you%20may%20have%20about%20our%20products%20or%20services.%0A%0AFeel%20free%20to%20ask%20about%20our%20latest%20offers%20and%20collections.%0A%0AHappy%20shopping!"
+
+
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <img src={whatsappLogo} width="60" alt="WhatsApp Logo" />
+  </a>
+</div>
+
   </Provider>
 );
