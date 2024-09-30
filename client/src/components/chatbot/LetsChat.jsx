@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './LetsChat.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect, useRef } from "react";
+import "./LetsChat.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LetsChatComponent = () => {
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     // Scroll to bottom when messages change
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleChatClick = () => {
@@ -28,17 +28,17 @@ const LetsChatComponent = () => {
       const newMessage = {
         id: messages.length + 1,
         text: inputMessage,
-        sender: 'user',
+        sender: "user",
       };
       setMessages([...messages, newMessage]);
-      setInputMessage('');
+      setInputMessage("");
 
       // Simulate bot response
       setTimeout(() => {
         const botResponse = {
           id: messages.length + 2,
           text: "We’ll reply as soon as we can.",
-          sender: 'bot',
+          sender: "bot",
         };
         setMessages((prevMessages) => [...prevMessages, botResponse]);
       }, 1000);
@@ -53,7 +53,9 @@ const LetsChatComponent = () => {
       {showChat && (
         <div className="chat-box">
           <div className="chat-header">
-            <h4>🙏 <b>Collab Vision Infosolutions</b></h4>
+            <h4>
+              🙏 <b>Collab Vision Infosolutions</b>
+            </h4>
             <button className="close-btn" onClick={handleChatClick}>
               ×
             </button>
@@ -76,7 +78,7 @@ const LetsChatComponent = () => {
             <button type="submit">Send</button>
           </form>
           <div className="chat-options">
-            <button onClick={() => toast.info('Continuing here')}>
+            <button onClick={() => toast.info("Continuing here")}>
               Continue Here
             </button>
             <a
