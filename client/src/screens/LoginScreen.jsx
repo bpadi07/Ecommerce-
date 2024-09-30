@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { setCredentials } from "../slices/userSlice";
 import { BACKEND_URL, BASE_URL } from "../constants";
 import Spinner from "../components/Spinner";
+import { useLocation } from "react-router-dom";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
