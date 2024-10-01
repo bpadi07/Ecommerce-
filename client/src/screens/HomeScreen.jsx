@@ -1,4 +1,3 @@
-
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Spinner from "../components/Spinner";
@@ -18,6 +17,7 @@ export default function HomeScreen() {
       const res = await axios.get(`${BACKEND_URL}/auth/login/success`, {
         withCredentials: true,
       });
+      console.log(res);
       dispatch(
         setCredentials({
           ...res.data.user._json,

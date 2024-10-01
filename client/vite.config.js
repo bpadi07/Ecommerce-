@@ -12,7 +12,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       
-      "/api": "https://ecommerceapp1-lfnc.onrender.com/",
-      "/upload": "https://ecommerceapp1-lfnc.onrender.com/"
+      "/api": "https://ecommerceapp1-lfnc.onrender.com",
+      "/upload": "https://ecommerceapp1-lfnc.onrender.com"
     },
   },})

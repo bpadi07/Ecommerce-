@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCredentials } from "../slices/userSlice";
-import { BACKEND_URL, BASE_URL } from "../constants";
+import { BACKEND_URL } from "../constants";
 import Spinner from "../components/Spinner";
 import { useLocation } from "react-router-dom";
 
@@ -33,6 +33,7 @@ export default function LoginScreen() {
   const [forgotPassword, { isLoading: isLoadingPassword }] =
     useForgotPasswordMutation();
 
+  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -45,23 +46,26 @@ export default function LoginScreen() {
     }
   };
 
+  // Handle forgot password action
   const handleForgotPassword = async () => {
-    if (!email) alert("Please enter your email");
-    else {
-      try {
-        const res = await forgotPassword({ email }).unwrap();
-        toast.success(res.message);
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
+    try {
+      const res = await forgotPassword({ email }).unwrap();
+      toast.success(res.message);
+    } catch (err) {
+      toast.error(err?.data?.message || err?.error);
     }
   };
 
+  // Handle Google authentication
   const handleGoogleAuth = () => {
     try {
       window.location.href = `${BACKEND_URL}/auth/google/callback`;
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      toast.error("Google authentication failed");
     }
   };
 
@@ -72,10 +76,10 @@ export default function LoginScreen() {
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div className="text-center">
-              <h1 className="text-2xl font-semibold">Login </h1>
+              <h1 className="text-2xl font-semibold">Login</h1>
             </div>
             <form onSubmit={handleLogin} className="divide-y divide-gray-200">
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+              <div className="py-8 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                 <div className="relative">
                   <input
                     type="text"
@@ -87,7 +91,7 @@ export default function LoginScreen() {
                   />
                   <label
                     htmlFor="email"
-                    className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                    className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-sm"
                   >
                     Email Address
                   </label>
@@ -103,7 +107,7 @@ export default function LoginScreen() {
                   />
                   <label
                     htmlFor="password"
-                    className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                    className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-sm"
                   >
                     Password
                   </label>
@@ -123,7 +127,7 @@ export default function LoginScreen() {
                     className="bg-green-500 text-white rounded-md px-2 py-1 w-full hover:bg-green-600"
                     disabled={isLoading}
                   >
-                    Login
+                    {isLoading ? <Spinner /> : "Login"}
                   </button>
                 </div>
                 <div className="relative">
@@ -135,8 +139,8 @@ export default function LoginScreen() {
                     Sign in with Google
                   </button>
                 </div>
-                {isLoading && <Spinner />}
               </div>
+              {isLoading && <Spinner />}
             </form>
             <p className="mt-4 text-center text-gray-600">
               Don't have an account?{" "}
