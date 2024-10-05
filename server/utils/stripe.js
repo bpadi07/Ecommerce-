@@ -17,7 +17,7 @@ const stripeUtil = app => {
             product_data: {
               name: item.name,
             },
-            unit_amount: item.price * 100, //cents
+            unit_amount: ((item.price * (item.discount / 100))* 100), //cents
           },
           quantity: item.qty,
         })),
