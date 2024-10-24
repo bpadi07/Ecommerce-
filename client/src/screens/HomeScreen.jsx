@@ -52,7 +52,6 @@ export default function HomeScreen() {
           {/* <React.Fragment>
             <BannerScreen />
           </React.Fragment> */}
-
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {data?.products?.map((product, i) => (
               <Product key={i} product={product} />

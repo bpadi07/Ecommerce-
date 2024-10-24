@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiLogOut, FiLogIn } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -85,16 +85,19 @@ const Header = () => {
         <li>
           <Link to="/admin/users" className="hover:text-gray-400">
             Users
+            {/* Students */}
           </Link>
         </li>
         <li>
           <Link to="/admin/products" className="hover:text-gray-400">
             Products
+            {/* Companies */}
           </Link>
         </li>
         <li>
           <Link to="/admin/orders" className="hover:text-gray-400">
             Orders
+            {/* Aptitude Test */}
           </Link>
         </li>
       </ul>
@@ -122,14 +125,14 @@ const Header = () => {
     <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-8 shadow-lg h-30 items-center justify-center">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <Link to="/">
+          {/* <Link to="/">
             <img
               src="https://tse2.mm.bing.net/th?id=OIP.u4ACMt9596m8E_EEGJsASQHaHa&pid=Api&P=0&h=180"
               alt="Amazon Logo"
               className="w-10 h-10 mr-2" // Adjust size here
             />
-          </Link>
-          <div className="text-white text-3xl font-extrabold">Amazon</div>
+          </Link> */}
+          {/* <div className="text-white text-3xl font-extrabold">Amazon</div> */}
         </div>
         <div className="hidden sm:flex items-center space-x-4 font-bold text-2xl">
           <input
